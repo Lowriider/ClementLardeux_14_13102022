@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .table-spacing-1 {
+        border-spacing: theme("borderSpacing.1");
+    }
+    .table-spacing-2 {
+        border-spacing: theme("borderSpacing.8");
+    }
+    .table-spacing-10 {
+        border-spacing: theme("borderSpacing.10");
+    }
+    .table-spacing-13 {
+        border-spacing: theme("borderSpacing.13");
+    }
+    .webkit-box {
+        display: -webkit-box;
+    }
+
+    .webkit-clamp-1 {
+        -webkit-line-clamp: 1;
+    }
+    .webkit-clamp-2 {
+        -webkit-line-clamp: 2;
+    }
+    .webkit-clamp-3 {
+        -webkit-line-clamp: 3;
+    }
+    .webkit-clamp-4 {
+        -webkit-line-clamp: 4;
+    }
+    .webkit-clamp-5 {
+        -webkit-line-clamp: 5;
+    }
+    .webkit-orient {
+        -webkit-box-orient: vertical;
+    }
+    .webkit-text-fill-color {
+        -webkit-text-fill-color: transparent;
+    }
+}
