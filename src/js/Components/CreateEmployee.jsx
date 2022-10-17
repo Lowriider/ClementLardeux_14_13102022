@@ -24,7 +24,8 @@ const CreateEmployee = ({employees}) => {
         return states.map((state, key) => {
             return {
                 value: key + 1,
-                label: state.name
+                label: state.name,
+                abbreviation: state.abbreviation
             }
         })
     }
@@ -33,10 +34,19 @@ const CreateEmployee = ({employees}) => {
         return departments.map((dep, key) => {
             return {
                 value: key + 1,
-                label: dep.name
+                label: dep.name,
             }
         })
     }
+
+    const getCurrentState = () => {
+       return getStates().find((state) => state.abbreviation === formData.state)
+    }
+
+   const getCurrentDepartment = () => {
+        return getDepartments().find((dep) => dep.label === formData.department)
+   }
+
 
     return (
         <form onSubmit={handleSaveEmployee} id="create-employee" className="w-full px-6 mb-6 sm:flex sm:flex-col sm:items-center sm:justify-center sm:max-w-[800px]">
@@ -90,9 +100,10 @@ const CreateEmployee = ({employees}) => {
             </div>
             <div className="flex flex-col mb-2 sm:flex-row sm:w-full sm:justify-between">
                 <label className="mb-2 w-full sm:mb-0" htmlFor="state">State</label>
-                <CustomSelect value={formData.state}
+                <CustomSelect value={getCurrentState()}
                               options={getStates()}
-                              onChange={(option) => setFormData({...formData, state: option})}/>
+                              onChange={(option) => setFormData({...formData, state: option.abbreviation})}
+                />
             </div>
             <div className="flex flex-col mb-2 sm:flex-row sm:w-full sm:justify-between">
                 <label className="mb-2 w-full sm:mb-0" htmlFor="zip-code">Zip Code</label>
@@ -105,9 +116,9 @@ const CreateEmployee = ({employees}) => {
             <div className="flex flex-col mb-2 sm:flex-row sm:w-full sm:justify-between">
                 <label className="mb-2 w-full sm:mb-0" htmlFor="department">Department</label>
                 <CustomSelect
-                              value={formData.department}
+                              value={getCurrentDepartment()}
                               options={getDepartments()}
-                              onChange={(option) => setFormData({...formData, department: option})}/>
+                              onChange={(option) => setFormData({...formData, department: option.label})}/>
             </div>
             <div className="flex items-center w-full justify-end mt-6 sm:transition-all sm:hover:scale-110  sm:justify-center ">
                 <button className="bg-purple text-xs text-white text-center font-semibold py-[13px] px-[26px] rounded-button cursor-pointer sm:max-w-[180px] sm:w-full sm:text-xl sm:py-2">
