@@ -1,7 +1,8 @@
-import {useState} from "react";
+import {useContext, useState} from "react";
 import DataTable from "react-data-table-component";
+import {UserContext} from "../Utils/Common";
 
-const EmployeesDataTable = ({data}) => {
+const EmployeesDataTable = () => {
 
     const columns = [
         {name: "First Name", selector: row => row.firstName, reorder: true, sortable: true,},
@@ -15,9 +16,11 @@ const EmployeesDataTable = ({data}) => {
         {name: "Zip Code", selector: row => row.zipCode, reorder: true, sortable: true,},
     ];
 
+    const {employees, setEmployees} = useContext(UserContext);
+
     const [valueOption, setValueOption] = useState('')
     const filteredData = () => {
-        return data.map(d => {
+        return employees.map(d => {
             return d
         })
     }
@@ -38,22 +41,21 @@ const EmployeesDataTable = ({data}) => {
         <div className=" w-full mt-10">
             <div className="mb-20 flex flex-col justify-center items-center">
                 <label className="pl-2 mr-2 mb-3 text-white font-semibold text-2xl" htmlFor="filter-value">Search for value</label>
-                <input className="max-w-[600px] w-full h-10 rounded-button border-[#EBEBEB] border-[1px] border-solid pl-2 text-xs text-gray placeholder:text-[#ADADAD] focus:outline-none" id="filter-value" onChange={(e) => setValueOption(e.target.value)} type="text" placeholder="Value to filter"/>
-
+                <input disabled={employees.length === 0} className={"max-w-[600px] w-full h-10 rounded-button border-[#EBEBEB] border-[1px] border-solid pl-2 text-xs text-gray placeholder:text-[#ADADAD] focus:outline-none"} id="filter-value" onChange={(e) => setValueOption(e.target.value)} type="text" placeholder="Value to filter"/>
             </div>
-            <div className="sm:overflow-x-scroll">
-                {
-                    data ?
+            {
+                employees.length > 0 ?
+                    <div className="sm:overflow-x-scroll">
                         <DataTable
                             columns={columns}
                             data={valueOption.length > 0 ? updateFilter() : filteredData()}
-                            pagination
-                        /> :
-                        <div>
-                            No data found
-                        </div>
-                }
-            </div>
+                            pagination/>
+                    </div>
+                    :
+                    <div className="flex justify-center items-center">
+                        No data found
+                    </div>
+            }
         </div>
     )
 }

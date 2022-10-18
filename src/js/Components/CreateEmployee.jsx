@@ -1,15 +1,17 @@
 import CustomSelect from "./CustomSelect";
-import {useState} from "react";
-import {departments, states} from "../Utils/Common";
+import {useContext, useState} from "react";
+import {departments, states, UserContext} from "../Utils/Common";
 import CustomDatePicker from "./CustomDatePicker";
 import moment from "moment";
+import {CustomPopin} from "react-custom-popin-v1/dist/index";
+import "react-custom-popin-v1/dist/css/CustomPopin.css";
 
-const CreateEmployee = ({employees}) => {
+const CreateEmployee = () => {
 
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
-        dateOfBirth: '',
+        dateOfBirth: null,
         startDate: null,
         department: '',
         street: '',
@@ -20,6 +22,10 @@ const CreateEmployee = ({employees}) => {
 
     const [isBirthdateOpen, setIsBirthDatedOpen] = useState(false);
     const [isStartDateOpen, setIsStartdateOpen] = useState(false);
+    const [isPopinVisible, setIsPopinVisible] = useState(false);
+
+    const localEmployees = JSON.parse(sessionStorage.getItem('employees')) || [];
+    const {employees, setEmployees} = useContext(UserContext);
 
     const handleToggleBirthDate = (e) => {
         e.preventDefault();
@@ -43,9 +49,13 @@ const CreateEmployee = ({employees}) => {
         }
     }
 
-    const handleSaveEmployee = () => {
-        employees.push(formData);
-        localStorage.setItem('employees', JSON.stringify(employees));
+    const handleSaveEmployee = (e) => {
+        e.preventDefault();
+
+        localEmployees.push(formData);
+        sessionStorage.setItem('employees', JSON.stringify(localEmployees));
+        setEmployees(localEmployees);
+        setIsPopinVisible(true)
     }
 
     const getStates = () => {
@@ -171,6 +181,11 @@ const CreateEmployee = ({employees}) => {
                     Save
                 </button>
             </div>
+            <CustomPopin onClose={() => setIsPopinVisible(false)} isVisible={isPopinVisible}>
+                <div>
+                    l'employé a été créé
+                </div>
+            </CustomPopin>
         </form>
     )
 }
