@@ -2,7 +2,7 @@ module.exports = {
   content: [
     "./src/**/*.jsx",
   ],
-  important: false,
+  important: true,
   theme: {
     colors: {
       'blue': '#342F5C',

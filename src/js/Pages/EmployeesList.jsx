@@ -4,10 +4,13 @@ const EmployeesList = () => {
 
     const employees = JSON.parse(localStorage.getItem('employees'));
 
-  return (
-      <div className="flex items-center justify-center mx-auto overflow-x-auto">
-        <EmployeesDataTable data={employees}/>
-      </div>
-  )
+    return (
+        <div className="flex">
+            {
+                employees.length > 0 &&
+                <EmployeesDataTable data={employees}/>
+            }
+        </div>
+    )
 }
 export default EmployeesList
