@@ -1,53 +1,59 @@
-import 'react-tabulator/lib/styles.css';
-import "react-tabulator/css/bootstrap/tabulator_bootstrap.min.css";
-import {ReactTabulator} from 'react-tabulator'
-import {useRef, useState} from "react";
+import {useState} from "react";
+import DataTable from "react-data-table-component";
 
 const EmployeesDataTable = ({data}) => {
-    const staffCompetencyTableRef = useRef(null);
+
     const columns = [
-        {title: "First Name", field: "firstName",},
-        {title: "Last Name", field: "lastName",},
-        {title: "Start Date", field: "startDate",},
-        {title: "Department", field: "department",},
-        {title: "Date Of Birth", field: "dateOfBirth",},
-        {title: "Street", field: "street",},
-        {title: "City", field: "city",},
-        {title: "State", field: "state",},
-        {title: "Zip Code", field: "zipCode",},
+        {name: "First Name", selector: row => row.firstName, reorder: true, sortable: true,},
+        {name: "Last Name", selector: row => row.lastName, reorder: true, sortable: true,},
+        {name: "Start Date", selector: row => row.startDate, reorder: true, sortable: true,},
+        {name: "Department", selector: row => row.department, reorder: true, sortable: true,},
+        {name: "Date Of Birth", selector: row => row.dateOfBirth, reorder: true, sortable: true,},
+        {name: "Street", selector: row => row.street, reorder: true, sortable: true,},
+        {name: "City", selector: row => row.city, reorder: true, sortable: true,},
+        {name: "State", selector: row => row.state, reorder: true, sortable: true,},
+        {name: "Zip Code", selector: row => row.zipCode, reorder: true, sortable: true,},
     ];
+
     const [valueOption, setValueOption] = useState('')
-//Trigger setFilter function with correct parameters
-    const updateFilter = () => {
+    const filteredData = () => {
         return data.map(d => {
-            if (Object.entries(d).find(v => v[1].toString().toLowerCase().includes(valueOption.toString().toLowerCase()))) {
-                return d
-            }
+            return d
         })
+    }
+    const updateFilter = () => {
+
+        let array = []
+        filteredData().map(v => {
+            return Object.entries(v).find(f => {
+                if (f[1].toLowerCase().includes(valueOption.toLowerCase()) && !array.includes(v)) {
+                    array.push(v)
+                }
+            })
+        })
+        return array
     }
 
     return (
-        <div className="w-3/4">
-            <div>
-                <label className="pl-2 mr-2" htmlFor="filter-value">Search</label>
-                <input id="filter-value" onChange={(e) => setValueOption(e.target.value)} type="text" placeholder="value to filter"/>
+        <div className=" w-full mt-10">
+            <div className="mb-20 flex flex-col justify-center items-center">
+                <label className="pl-2 mr-2 mb-3 text-white font-semibold text-2xl" htmlFor="filter-value">Search for value</label>
+                <input className="max-w-[600px] w-full h-10 rounded-button border-[#EBEBEB] border-[1px] border-solid pl-2 text-xs text-gray placeholder:text-[#ADADAD] focus:outline-none" id="filter-value" onChange={(e) => setValueOption(e.target.value)} type="text" placeholder="Value to filter"/>
+
             </div>
-            <ReactTabulator
-                onRef={(r) => (staffCompetencyTableRef.current = r.current)}
-                data={valueOption.length > 0 ? updateFilter() : data}
-                data-custom-attr="test-custom-attribute"
-                className="custom-css-class"
-                columns={columns}
-                options={{
-                    pagination: "local",
-                    paginationSize: 5,
-                    paginationSizeSelector: [10, 15, 20],
-                    paginationCounter: "rows",
-                    responsiveLayout: "hide",
-                    renderHorizontal: "virtual",
-                    layout: "fitColumns",
-                }}
-            />
+            <div className="sm:overflow-x-scroll">
+                {
+                    data ?
+                        <DataTable
+                            columns={columns}
+                            data={valueOption.length > 0 ? updateFilter() : filteredData()}
+                            pagination
+                        /> :
+                        <div>
+                            No data found
+                        </div>
+                }
+            </div>
         </div>
     )
 }
