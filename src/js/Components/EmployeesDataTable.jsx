@@ -41,7 +41,7 @@ const EmployeesDataTable = () => {
         <div className=" w-full mt-10">
             <div className="mb-20 flex flex-col justify-center items-center">
                 <label className="pl-2 mr-2 mb-3 text-white font-semibold text-2xl" htmlFor="filter-value">Search for value</label>
-                <input disabled={employees.length === 0} className={"max-w-[600px] w-full h-10 rounded-button border-[#EBEBEB] border-[1px] border-solid pl-2 text-xs text-gray placeholder:text-[#ADADAD] focus:outline-none"} id="filter-value" onChange={(e) => setValueOption(e.target.value)} type="text" placeholder="Value to filter"/>
+                <input disabled={employees.length === 0} className={"max-w-[600px] w-full h-10 rounded-button border-[#EBEBEB] border-[1px] border-solid pl-2 text-xs text-black placeholder:text-black focus:outline-none"} id="filter-value" onChange={(e) => setValueOption(e.target.value)} type="text" placeholder="Value to filter"/>
             </div>
             {
                 employees.length > 0 ?
