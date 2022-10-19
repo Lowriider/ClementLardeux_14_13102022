@@ -6,7 +6,7 @@ const MainHeader = () => {
     return (
         <div className="flex flex-col items-center justify-center pb-10 sm:justify-between sm:flex-row sm:px-10">
             <Link to={`/`}>
-                <img className="w-[150px] h-[150px]" src="/images/HRnet.svg" alt=""/>
+                <img className="w-[150px] h-[150px]" src="/images/HRnet.svg" alt="logo" name="logo"/>
             </Link>
             {
                 navigate.pathname === "/" ?
