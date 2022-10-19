@@ -180,7 +180,7 @@ const CreateEmployee = () => {
                     Save
                 </button>
             </div>
-            <CustomPopin onClose={() => setIsPopinVisible(false)} isVisible={isPopinVisible}>
+            <CustomPopin onClose={() => setIsPopinVisible(false)} isVisible={isPopinVisible} title={"Alert"} rightButton={"Ok"} submit={() => setIsPopinVisible(false)}>
                 <div>
                     Employee created successfully
                 </div>
