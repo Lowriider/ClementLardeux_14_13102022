@@ -1,8 +1,9 @@
 module.exports = {
   content: [
     "./src/**/*.jsx",
+    './node_modules/react-custom-popin-v2/dist/*.{js,jsx}'
   ],
-  important: false,
+  important: true,
   theme: {
     colors: {
       'blue': '#342F5C',
